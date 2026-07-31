@@ -1,0 +1,25 @@
+# Environment variables & secrets
+*.env
+.env
+.env.local
+
+# Dependencies
+node_modules/
+
+# Build and compilation outputs
+dist/
+build/
+*.tsbuildinfo
+
+# Docker and database storage
+_docker/data/
+
+# Log files
+*.log
+npm-debug.log*
+
+# OS and Editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
