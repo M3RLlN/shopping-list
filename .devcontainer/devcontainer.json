@@ -9,6 +9,13 @@
     "runServices": ["devcontainer", "mongodb"],
     "workspaceFolder": "/workspace",
 
+    // Windows-Bind-Mount liefert keine inotify-Events in den Container.
+    // Datei-Watcher muessen daher pollen, sonst kein Hot Reload.
+    "containerEnv": {
+        "CHOKIDAR_USEPOLLING": "1",
+        "CHOKIDAR_INTERVAL": "300"
+    },
+
     "customizations": {
         "vscode": {
         "settings": {
