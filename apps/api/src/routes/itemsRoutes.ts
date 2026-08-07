@@ -1,16 +1,15 @@
 import express from "express";
-import {
-  getAllItems,
-  createItem,
-  updateItem,
-  deleteItem,
-} from "../controllers/itemsController.js";
+import { ItemsController } from "../controllers/ItemsController.js";
+import type { ItemRepository } from "@shopping/domain";
 
-const router = express.Router();
+export const createItemsRoutes = (itemRepo: ItemRepository) => {
+  const controller = new ItemsController(itemRepo);
+  const router = express.Router();
 
-router.get("/", getAllItems);
-router.post("/", createItem);
-router.put("/:id", updateItem);
-router.delete("/:id", deleteItem);
+  router.get("/", controller.getAllItems);
+  router.post("/", controller.createItem);
+  router.put("/:id", controller.updateItem);
+  router.delete("/:id", controller.deleteItem);
 
-export default router;
+  return router;
+};
