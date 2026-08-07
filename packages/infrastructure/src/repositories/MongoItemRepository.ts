@@ -3,7 +3,11 @@ import { ItemModel } from "../models/Item.js";
 
 export class MongoItemRepository implements ItemRepository {
   async findAll(): Promise<Item[]> {
-    return await ItemModel.find();
+    return await ItemModel.find().sort({ createdAt: -1 });
+  }
+
+  async find(id: string): Promise<Item | null> {
+    return await ItemModel.findById(id);
   }
 
   async create(item: Item): Promise<Item> {

@@ -7,6 +7,7 @@ export const createItemsRoutes = (itemRepo: ItemRepository) => {
   const router = express.Router();
 
   router.get("/", controller.getAllItems);
+  router.get("/:id", controller.getItemById);
   router.post("/", controller.createItem);
   router.put("/:id", controller.updateItem);
   router.delete("/:id", controller.deleteItem);
