@@ -41,6 +41,7 @@ services:
       - "${API_PORT}:3000"
     environment:
       BASE_URL: http://localhost:${API_PORT}
+      CORS_ORIGIN: http://localhost:${FRONTEND_PORT}
       MONGO_HOST: ${MONGO_HOST}
       MONGO_PORT: ${MONGO_PORT}
       MONGO_DB: ${MONGO_DB}
