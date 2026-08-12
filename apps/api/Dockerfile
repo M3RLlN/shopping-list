@@ -1,4 +1,4 @@
-FROM node:24-alpine AS builder
+FROM node:24.19.0-alpine3.24 AS builder
 
 WORKDIR /app
 
@@ -18,7 +18,8 @@ RUN npm run build
 
 
 
-FROM node:24-alpine
+FROM node:24.19.0-alpine3.24
+ENV NODE_ENV=production
 
 WORKDIR /app
 
@@ -30,9 +31,9 @@ COPY apps/frontend/package.json apps/frontend/
 
 RUN npm ci --omit=dev
 
-COPY --from=builder /app/apps/api/dist apps/api/dist
-COPY --from=builder /app/packages/domain/dist packages/domain/dist
-COPY --from=builder /app/packages/infrastructure/dist packages/infrastructure/dist
+COPY --from=builder --chown=node:node /app/apps/api/dist apps/api/dist
+COPY --from=builder --chown=node:node /app/packages/domain/dist packages/domain/dist
+COPY --from=builder --chown=node:node /app/packages/infrastructure/dist packages/infrastructure/dist
 
 EXPOSE 3000
 
