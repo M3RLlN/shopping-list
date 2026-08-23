@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import type { Item } from "@shopping/domain";
 
-const itemSchema = new mongoose.Schema<Item>(
+const itemSchema = new mongoose.Schema<Omit<Item, "id">>(
   {
     label: {
       type: String,
@@ -19,4 +19,4 @@ const itemSchema = new mongoose.Schema<Item>(
   { timestamps: true },
 );
 
-export const ItemModel = mongoose.model<Item>("Item", itemSchema);
+export const ItemModel = mongoose.model<Omit<Item, "id">>("Item", itemSchema);
