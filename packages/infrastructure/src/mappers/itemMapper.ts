@@ -7,6 +7,7 @@ export const toItem = (itemDoc: ItemDocument): Item => {
     label: itemDoc.label,
     createdAt: itemDoc.createdAt,
     updatedAt: itemDoc.updatedAt,
+    bought: itemDoc.bought,
   };
 
   if (itemDoc.amount !== undefined) item.amount = itemDoc.amount;

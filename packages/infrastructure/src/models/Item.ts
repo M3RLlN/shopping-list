@@ -15,6 +15,10 @@ const itemSchema = new mongoose.Schema<Omit<Item, "id">>(
       type: String,
       required: false,
     },
+    bought: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );

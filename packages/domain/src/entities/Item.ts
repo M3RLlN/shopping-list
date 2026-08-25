@@ -3,6 +3,7 @@ export interface Item {
   label: string;
   amount?: number;
   unit?: string;
+  bought: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -17,4 +18,5 @@ export interface UpdateItemInput {
   label?: string;
   amount?: number;
   unit?: string;
+  bought?: boolean;
 }
