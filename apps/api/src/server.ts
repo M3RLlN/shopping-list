@@ -5,6 +5,7 @@ import cors from "cors";
 import { connectDB, MongoItemRepository } from "@shopping/infrastructure";
 import { createItemsRoutes } from "./routes/itemsRoutes.js";
 import { healthRoutes } from "./routes/healthRoutes.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
 
 dotenv.config({ path: path.resolve(process.cwd(), "../../_docker/.env") });
 
@@ -21,6 +22,7 @@ app.use(cors({ origin: CORS_ORIGIN }));
 // Routes
 app.use("/health", healthRoutes);
 app.use("/api/items", createItemsRoutes(itemRepository));
+app.use(errorHandler);
 
 connectDB().then(() => {
   app.listen(PORT, () => {
