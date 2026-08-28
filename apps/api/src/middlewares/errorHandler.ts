@@ -1,5 +1,6 @@
 import type { ErrorRequestHandler } from "express";
 import { AppException } from "@shopping/domain";
+import { z } from "zod";
 
 export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   if (err instanceof AppException) {
@@ -7,6 +8,13 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     return;
   }
 
+  if (err instanceof z.ZodError) {
+    res
+      .status(400)
+      .json({ error: { message: "Invalid request data", details: z.flattenError(err) } });
+    return;
+  }
+
   console.error(err);
-  res.status(500).json({ error: { message: "internal server error" } });
+  res.status(500).json({ error: { message: "Internal server error" } });
 };
