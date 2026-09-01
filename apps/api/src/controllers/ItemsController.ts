@@ -2,6 +2,19 @@ import type { Request, Response } from "express";
 import type { ItemRepository } from "@shopping/domain";
 import { NotFoundException } from "@shopping/domain";
 
+/**
+ * The handlers for all `/api/items` routes.
+ *
+ * The repository is passed in through the constructor (dependency injection),
+ * so the controller does not know the database and can be tested with a stand-in.
+ *
+ * The body of a request is already checked by middleware,
+ * and a missing item is reported by throwing a `NotFoundException`.
+ * That is why no error status code appears anywhere in here.
+ *
+ * Every successful answer is wrapped in `{ data: ... }`,
+ * so a client always finds either `data` or `error` at the top.
+ */
 export class ItemsController {
   constructor(private readonly itemRepo: ItemRepository) {}
   getAllItems = async (req: Request, res: Response) => {

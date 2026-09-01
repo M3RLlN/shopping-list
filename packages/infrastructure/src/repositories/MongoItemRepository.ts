@@ -2,8 +2,13 @@ import type { Item, CreateItemInput, UpdateItemInput, ItemRepository } from "@sh
 import { ItemModel } from "../models/Item.js";
 import { toItem } from "../mappers/itemMapper.js";
 
+/**
+ * Mongoose implementation of `ItemRepository`.
+ * What each method does is documented on the interface.
+ */
 export class MongoItemRepository implements ItemRepository {
   async findAll(): Promise<Item[]> {
+    // -1 sorts descending, so the newest item comes first.
     const itemDocs = await ItemModel.find().sort({ createdAt: -1 });
     return itemDocs.map(toItem);
   }
@@ -21,6 +26,8 @@ export class MongoItemRepository implements ItemRepository {
 
   async update(id: string, item: UpdateItemInput): Promise<Item | null> {
     const itemDoc = await ItemModel.findByIdAndUpdate(id, item, {
+      // `returnDocument: "after"` returns the item as it looks after the change; without it Mongoose returns the old version.
+      // `runValidators: true` applies the schema rules on updates too — Mongoose skips them by default.
       returnDocument: "after",
       runValidators: true,
     });
