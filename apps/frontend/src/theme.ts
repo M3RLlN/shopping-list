@@ -28,6 +28,15 @@ const theme = createTheme({
       fontSize: "2.5rem",
     },
   },
+  components: {
+    MuiListItemText: {
+      styleOverrides: {
+        primary: {
+          fontFamily: HANDWRITING,
+        },
+      },
+    },
+  },
 });
 
 export default theme;

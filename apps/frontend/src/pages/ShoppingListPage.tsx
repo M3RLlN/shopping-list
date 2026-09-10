@@ -7,7 +7,7 @@ function ShoppingListPage() {
   return (
     <Box sx={{ height: "100dvh", display: "flex", flexDirection: "column" }}>
       <AppHeader />
-      <Box sx={{ padding: 2, display: "flex", flex: 1 }}>
+      <Box sx={{ padding: 2, display: "flex", flex: 1, minHeight: 0 }}>
         <PaperSheet />
       </Box>
       <AppFooter />
