@@ -16,5 +16,10 @@ export default defineConfig({
       // How often to look, in milliseconds.
       interval: 300,
     },
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000",
+      },
+    },
   },
 });

@@ -3,9 +3,8 @@ import type { CreateItemInput, Item, UpdateItemInput } from "../entities/Item.js
 /**
  * Data access contract for shopping list items.
  *
- * Declared in the domain layer and implemented by `MongoItemRepository` in the
- * infrastructure layer. The domain therefore states which operations it needs
- * without depending on a specific database.
+ * Declared in the domain layer and implemented by `MongoItemRepository` in the infrastructure layer.
+ * The domain therefore states which operations it needs without depending on a specific database.
  */
 export interface ItemRepository {
   /**

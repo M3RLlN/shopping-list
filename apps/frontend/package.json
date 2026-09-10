@@ -17,7 +17,8 @@
     "@mui/material": "^9.4.0",
     "@shopping/domain": "^1.0.0",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "zod": "^4.6.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
