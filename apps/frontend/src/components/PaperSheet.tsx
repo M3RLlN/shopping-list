@@ -1,47 +1,10 @@
 import { Box, List } from "@mui/material";
 import ItemRow from "./ItemRow";
-
-const items = [
-  {
-    id: "i1",
-    label: "Mehl",
-    amount: 2,
-    unit: "x",
-    bought: false,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: "i2",
-    label: "Wasser",
-    amount: 12,
-    unit: "l",
-    bought: false,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: "i3",
-    label: "Katzenfutter",
-    amount: 2,
-    unit: "kg",
-    bought: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  { id: "i4", label: "Bügeleisen", bought: false, createdAt: new Date(), updatedAt: new Date() },
-  {
-    id: "i5",
-    label: "Zement",
-    amount: 2,
-    unit: "kg",
-    bought: false,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-];
+import { useItems } from "../hooks/useItems";
 
 function PaperSheet() {
+  const { items } = useItems();
+
   return (
     <Box
       sx={{

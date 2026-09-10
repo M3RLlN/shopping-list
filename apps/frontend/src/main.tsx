@@ -8,6 +8,3 @@ createRoot(document.getElementById("root")!).render(
     <App />
   </StrictMode>,
 );
-
-import { httpItemRepository } from "./repositories/HttpItemRepository.ts";
-httpItemRepository.findAll().then(console.log);
