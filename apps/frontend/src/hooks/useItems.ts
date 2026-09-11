@@ -11,7 +11,7 @@ export const useItems = () => {
   useEffect(() => {
     httpItemRepository
       .findAll()
-      .then(setItems)
+      .then((list) => setItems(list))
       .catch((err) => {
         const message = toUserMessage(err);
         console.error(err);
@@ -20,5 +20,11 @@ export const useItems = () => {
       .finally(() => setIsLoading(false));
   }, []);
 
-  return { items, setItems, isLoading, error };
+  const toggleBought = async (item: Item) => {
+    await httpItemRepository.update(item.id, { bought: !item.bought });
+    const updatedItems = await httpItemRepository.findAll();
+    setItems(updatedItems);
+  };
+
+  return { items, isLoading, error, toggleBought };
 };

@@ -5,8 +5,6 @@ export const toUserMessage = (err: unknown): string => {
     switch (err.status) {
       case 400:
         return "Die Eingabe ist ungültig.";
-      case 404:
-        return "Dieser Eintrag existiert nicht mehr.";
       case 502:
       case 503:
       case 504:

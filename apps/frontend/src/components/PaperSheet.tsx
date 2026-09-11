@@ -3,7 +3,7 @@ import ItemRow from "./ItemRow";
 import { useItems } from "../hooks/useItems";
 
 function PaperSheet() {
-  const { items, isLoading, error } = useItems();
+  const { items, isLoading, error, toggleBought } = useItems();
 
   return (
     <Box
@@ -20,7 +20,7 @@ function PaperSheet() {
       {!isLoading && !error && (
         <List>
           {items.map((item) => (
-            <ItemRow key={item.id} item={item} />
+            <ItemRow key={item.id} item={item} onToggleBought={toggleBought} />
           ))}
         </List>
       )}

@@ -1,9 +1,11 @@
 import { ListItem, ListItemText, Checkbox, Box } from "@mui/material";
 import type { Item } from "@shopping/domain";
 
-function ItemRow({ item }: { item: Item }) {
+function ItemRow({ item, onToggleBought }: { item: Item; onToggleBought: (item: Item) => void }) {
   return (
-    <ListItem secondaryAction={<Checkbox checked={item.bought} />}>
+    <ListItem
+      secondaryAction={<Checkbox onChange={() => onToggleBought(item)} checked={item.bought} />}
+    >
       <Box
         sx={{
           display: "flex",

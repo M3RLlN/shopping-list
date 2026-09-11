@@ -1,4 +1,4 @@
-import type { Item } from "@shopping/domain";
+import type { Item, UpdateItemInput } from "@shopping/domain";
 import { AppException } from "@shopping/domain";
 import { z } from "zod";
 
@@ -26,5 +26,17 @@ export const httpItemRepository = {
     await throwIfNotOk(res);
     const body = await res.json();
     return itemResponseSchema.array().parse(body.data);
+  },
+
+  async update(id: string, item: UpdateItemInput): Promise<Item | null> {
+    const res = await fetch(`/api/items/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(item),
+    });
+    if (res.status === 404) return null;
+    await throwIfNotOk(res);
+    const body = await res.json();
+    return itemResponseSchema.parse(body.data);
   },
 };
