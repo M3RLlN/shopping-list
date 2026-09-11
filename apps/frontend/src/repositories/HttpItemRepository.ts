@@ -12,14 +12,18 @@ const itemResponseSchema = z.object({
   updatedAt: z.coerce.date(),
 });
 
+const throwIfNotOk = async (res: Response): Promise<void> => {
+  if (!res.ok) {
+    const errorBody = await res.json().catch(() => null);
+    const message = errorBody?.error?.message ?? "Request Failed";
+    throw new AppException(message, res.status);
+  }
+};
+
 export const httpItemRepository = {
   async findAll(): Promise<Item[]> {
     const res = await fetch("/api/items");
-    if (!res.ok) {
-      const errorBody = await res.json().catch(() => null);
-      const message = errorBody?.error?.message ?? "Failed to load items";
-      throw new AppException(message, res.status);
-    }
+    await throwIfNotOk(res);
     const body = await res.json();
     return itemResponseSchema.array().parse(body.data);
   },
