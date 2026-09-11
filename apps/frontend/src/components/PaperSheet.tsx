@@ -1,9 +1,9 @@
-import { Box, List } from "@mui/material";
+import { Box, List, Alert, CircularProgress } from "@mui/material";
 import ItemRow from "./ItemRow";
 import { useItems } from "../hooks/useItems";
 
 function PaperSheet() {
-  const { items } = useItems();
+  const { items, isLoading, error } = useItems();
 
   return (
     <Box
@@ -15,11 +15,15 @@ function PaperSheet() {
         overflow: "auto",
       }}
     >
-      <List>
-        {items.map((item) => (
-          <ItemRow key={item.id} item={item} />
-        ))}
-      </List>
+      {error && <Alert severity="error">{error}</Alert>}
+      {isLoading && <CircularProgress />}
+      {!isLoading && !error && (
+        <List>
+          {items.map((item) => (
+            <ItemRow key={item.id} item={item} />
+          ))}
+        </List>
+      )}
     </Box>
   );
 }
