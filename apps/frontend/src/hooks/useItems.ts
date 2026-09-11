@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import type { Item } from "@shopping/domain";
 import { httpItemRepository } from "../repositories/HttpItemRepository";
+import { toUserMessage } from "../utils/toUserMessage";
 
 export const useItems = () => {
   const [items, setItems] = useState<Item[]>([]);
@@ -11,7 +12,11 @@ export const useItems = () => {
     httpItemRepository
       .findAll()
       .then(setItems)
-      .catch((err) => setError(err.message))
+      .catch((err) => {
+        const message = toUserMessage(err);
+        console.error(err);
+        setError(message);
+      })
       .finally(() => setIsLoading(false));
   }, []);
 
