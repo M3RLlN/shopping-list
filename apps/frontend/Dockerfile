@@ -13,6 +13,7 @@ RUN npm ci
 COPY apps/frontend apps/frontend
 COPY packages/domain packages/domain
 
+RUN npm run build -w @shopping/domain
 RUN npm run build -w @shopping/frontend
 
 
