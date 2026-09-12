@@ -1,7 +1,12 @@
 import { ListItem, ListItemText, Checkbox, Box } from "@mui/material";
 import type { Item } from "@shopping/domain";
 
-function ItemRow({ item, onToggleBought }: { item: Item; onToggleBought: (item: Item) => void }) {
+type Props = {
+  item: Item;
+  onToggleBought: (item: Item) => void;
+};
+
+function ItemRow({ item, onToggleBought }: Props) {
   return (
     <ListItem
       secondaryAction={<Checkbox onChange={() => onToggleBought(item)} checked={item.bought} />}

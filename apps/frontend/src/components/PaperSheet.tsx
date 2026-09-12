@@ -1,10 +1,15 @@
-import { Box, List, Alert, CircularProgress, Snackbar } from "@mui/material";
+import { Box, List, Alert, CircularProgress } from "@mui/material";
 import ItemRow from "./ItemRow";
-import { useItems } from "../hooks/useItems";
+import type { Item } from "@shopping/domain";
 
-function PaperSheet() {
-  const { items, isLoading, error, toggleBought, notice, clearNotice } = useItems();
+type Props = {
+  items: Item[];
+  isLoading: boolean;
+  error: string | null;
+  onToggleBought: (item: Item) => void;
+};
 
+function PaperSheet({ items, isLoading, error, onToggleBought }: Props) {
   return (
     <Box
       sx={{
@@ -20,15 +25,10 @@ function PaperSheet() {
       {!isLoading && !error && (
         <List>
           {items.map((item) => (
-            <ItemRow key={item.id} item={item} onToggleBought={toggleBought} />
+            <ItemRow key={item.id} item={item} onToggleBought={onToggleBought} />
           ))}
         </List>
       )}
-      <Snackbar open={notice != null} autoHideDuration={6000} onClose={clearNotice}>
-        <Alert severity="error" onClose={clearNotice}>
-          {notice}
-        </Alert>
-      </Snackbar>
     </Box>
   );
 }
