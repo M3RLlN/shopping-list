@@ -7,6 +7,7 @@ export const useItems = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
 
   useEffect(() => {
     httpItemRepository
@@ -21,10 +22,19 @@ export const useItems = () => {
   }, []);
 
   const toggleBought = async (item: Item) => {
-    await httpItemRepository.update(item.id, { bought: !item.bought });
-    const updatedItems = await httpItemRepository.findAll();
-    setItems(updatedItems);
+    try {
+      await httpItemRepository.update(item.id, { bought: !item.bought });
+      const updatedItems = await httpItemRepository.findAll();
+      setItems(updatedItems);
+    } catch (err) {
+      const message = toUserMessage(err);
+      console.error(err);
+      setNotice(message);
+    }
   };
 
-  return { items, isLoading, error, toggleBought };
+  const clearNotice = () => {
+    setNotice(null);
+  };
+  return { items, isLoading, error, toggleBought, notice, clearNotice };
 };

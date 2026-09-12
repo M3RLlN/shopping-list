@@ -34,7 +34,6 @@ export const httpItemRepository = {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(item),
     });
-    if (res.status === 404) return null;
     await throwIfNotOk(res);
     const body = await res.json();
     return itemResponseSchema.parse(body.data);

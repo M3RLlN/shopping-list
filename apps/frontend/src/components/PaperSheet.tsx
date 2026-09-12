@@ -1,9 +1,9 @@
-import { Box, List, Alert, CircularProgress } from "@mui/material";
+import { Box, List, Alert, CircularProgress, Snackbar } from "@mui/material";
 import ItemRow from "./ItemRow";
 import { useItems } from "../hooks/useItems";
 
 function PaperSheet() {
-  const { items, isLoading, error, toggleBought } = useItems();
+  const { items, isLoading, error, toggleBought, notice, clearNotice } = useItems();
 
   return (
     <Box
@@ -24,6 +24,11 @@ function PaperSheet() {
           ))}
         </List>
       )}
+      <Snackbar open={notice != null} autoHideDuration={6000} onClose={clearNotice}>
+        <Alert severity="error" onClose={clearNotice}>
+          {notice}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }
