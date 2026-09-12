@@ -1,4 +1,4 @@
-import type { Item, UpdateItemInput } from "@shopping/domain";
+import type { Item, UpdateItemInput, CreateItemInput } from "@shopping/domain";
 import { AppException } from "@shopping/domain";
 import { z } from "zod";
 
@@ -28,11 +28,31 @@ export const httpItemRepository = {
     return itemResponseSchema.array().parse(body.data);
   },
 
-  async update(id: string, item: UpdateItemInput): Promise<Item | null> {
+  async create(item: CreateItemInput): Promise<Item> {
+    const res = await fetch("/api/items", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(item),
+    });
+    await throwIfNotOk(res);
+    const body = await res.json();
+    return itemResponseSchema.parse(body.data);
+  },
+
+  async update(id: string, item: UpdateItemInput): Promise<Item> {
     const res = await fetch(`/api/items/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(item),
+    });
+    await throwIfNotOk(res);
+    const body = await res.json();
+    return itemResponseSchema.parse(body.data);
+  },
+
+  async delete(id: string): Promise<Item> {
+    const res = await fetch(`/api/items/${id}`, {
+      method: "DELETE",
     });
     await throwIfNotOk(res);
     const body = await res.json();
