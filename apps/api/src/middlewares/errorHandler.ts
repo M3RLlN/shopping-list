@@ -33,6 +33,13 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     return;
   }
 
+  // The body could not be read at all, the caller sent broken JSON, not wrong data: 400.
+  // `instanceof SyntaxError` would also catch a mistake in own code and answer 400 for it.
+  if (err.type === "entity.parse.failed") {
+    res.status(400).json({ error: { message: "Invalid JSON body" } });
+    return;
+  }
+
   // Anything else is a problem on server side.
   // The real error goes to the log, the client only gets a general message.
   console.error(err);
