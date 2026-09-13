@@ -7,9 +7,11 @@ type Props = {
   isLoading: boolean;
   error: string | null;
   onToggleBought: (item: Item) => void;
+  mode: "normal" | "edit";
+  onEdit: (item: Item) => void;
 };
 
-function PaperSheet({ items, isLoading, error, onToggleBought }: Props) {
+function PaperSheet({ items, isLoading, error, onToggleBought, mode, onEdit }: Props) {
   return (
     <Box
       sx={{
@@ -25,7 +27,13 @@ function PaperSheet({ items, isLoading, error, onToggleBought }: Props) {
       {!isLoading && !error && (
         <List>
           {items.map((item) => (
-            <ItemRow key={item.id} item={item} onToggleBought={onToggleBought} />
+            <ItemRow
+              key={item.id}
+              item={item}
+              onToggleBought={onToggleBought}
+              mode={mode}
+              onEdit={onEdit}
+            />
           ))}
         </List>
       )}

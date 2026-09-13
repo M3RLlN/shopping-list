@@ -7,19 +7,25 @@ import {
   DialogContent,
   Box,
 } from "@mui/material";
-import type { CreateItemInput } from "@shopping/domain";
+import type { CreateItemInput, UpdateItemInput, Item } from "@shopping/domain";
 import { useState } from "react";
 
 type Props = {
   open: boolean;
   onClose: () => void;
-  onSave: (item: CreateItemInput) => void;
+  onCreate: (item: CreateItemInput) => void;
+  onUpdate: (id: string, item: UpdateItemInput) => void;
+  itemToEdit: Item | null;
 };
 
-function ItemFormDialog({ open, onClose, onSave }: Props) {
-  const [label, setLabel] = useState<string>("");
-  const [amount, setAmount] = useState<string>("");
-  const [unit, setUnit] = useState<string>("");
+function ItemFormDialog({ open, onClose, onCreate, onUpdate, itemToEdit }: Props) {
+  const [label, setLabel] = useState<string>(() => itemToEdit?.label ?? "");
+  const [amount, setAmount] = useState<string>(() =>
+    itemToEdit?.amount != undefined ? String(itemToEdit.amount) : "",
+  );
+  const [unit, setUnit] = useState<string>(() =>
+    itemToEdit?.unit != undefined ? itemToEdit.unit : "",
+  );
 
   const resetForm = () => {
     setLabel("");
@@ -33,7 +39,11 @@ function ItemFormDialog({ open, onClose, onSave }: Props) {
       amount: amount === "" ? undefined : Number(amount),
       unit: unit === "" ? undefined : unit,
     };
-    onSave(item);
+    if (itemToEdit == null) {
+      onCreate(item);
+    } else {
+      onUpdate(itemToEdit.id, item);
+    }
     resetForm();
     onClose();
   };
@@ -49,7 +59,9 @@ function ItemFormDialog({ open, onClose, onSave }: Props) {
       onClose={handleCancel}
       slotProps={{ paper: { sx: { backgroundColor: "primary.main" } } }}
     >
-      <DialogTitle sx={{ color: "primary.contrastText" }}>Neuer Eintrag</DialogTitle>
+      <DialogTitle sx={{ color: "primary.contrastText" }}>
+        {itemToEdit == null ? "Neuer Eintrag" : "Eintrag bearbeiten"}
+      </DialogTitle>
       <DialogContent>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <TextField
@@ -91,6 +103,7 @@ function ItemFormDialog({ open, onClose, onSave }: Props) {
         <Button
           sx={{ borderRadius: 0 }}
           variant="contained"
+          disableElevation
           color="error"
           fullWidth
           onClick={handleCancel}
@@ -100,6 +113,7 @@ function ItemFormDialog({ open, onClose, onSave }: Props) {
         <Button
           sx={{ borderRadius: 0 }}
           variant="contained"
+          disableElevation
           color="secondary"
           fullWidth
           onClick={handleSave}

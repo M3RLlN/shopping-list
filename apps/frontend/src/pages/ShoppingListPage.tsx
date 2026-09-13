@@ -7,18 +7,22 @@ import { useState } from "react";
 import ItemFormDialog from "../components/ItemFormDialog";
 import ListActionBar from "../components/ListActionBar";
 import EditActionBar from "../components/EditActionBar";
+import type { Item } from "@shopping/domain";
 
 function ShoppingListPage() {
-  const { items, isLoading, error, toggleBought, notice, clearNotice, addItem } = useItems();
+  const { items, isLoading, error, toggleBought, notice, clearNotice, addItem, updateItem } =
+    useItems();
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [mode, setMode] = useState<"normal" | "edit">("normal");
+  const [editingItem, setEditingItem] = useState<Item | null>(null);
 
   const openAddDialog = () => {
     setIsDialogOpen(true);
   };
 
-  const closeAddDialog = () => {
+  const closeDialog = () => {
     setIsDialogOpen(false);
+    setEditingItem(null);
   };
 
   const enterEditMode = () => {
@@ -27,6 +31,11 @@ function ShoppingListPage() {
 
   const exitEditMode = () => {
     setMode("normal");
+  };
+
+  const openEditDialog = (item: Item) => {
+    setEditingItem(item);
+    setIsDialogOpen(true);
   };
 
   return (
@@ -38,6 +47,8 @@ function ShoppingListPage() {
           isLoading={isLoading}
           error={error}
           onToggleBought={toggleBought}
+          mode={mode}
+          onEdit={openEditDialog}
         />
         <AddFab onClick={openAddDialog} />
       </Box>
@@ -55,7 +66,14 @@ function ShoppingListPage() {
           {notice}
         </Alert>
       </Snackbar>
-      <ItemFormDialog open={isDialogOpen} onClose={closeAddDialog} onSave={addItem} />
+      <ItemFormDialog
+        key={editingItem?.id ?? "new"}
+        open={isDialogOpen}
+        onClose={closeDialog}
+        onCreate={addItem}
+        onUpdate={updateItem}
+        itemToEdit={editingItem}
+      />
     </Box>
   );
 }

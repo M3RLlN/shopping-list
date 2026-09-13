@@ -1,16 +1,24 @@
-import { ListItem, ListItemText, Checkbox, Box } from "@mui/material";
+import { ListItem, ListItemText, Checkbox, Box, IconButton } from "@mui/material";
 import type { Item } from "@shopping/domain";
+import { EditOutlined } from "@mui/icons-material";
 
 type Props = {
   item: Item;
   onToggleBought: (item: Item) => void;
+  mode: "normal" | "edit";
+  onEdit: (item: Item) => void;
 };
 
-function ItemRow({ item, onToggleBought }: Props) {
+function ItemRow({ item, onToggleBought, mode, onEdit }: Props) {
   return (
     <ListItem
       secondaryAction={<Checkbox onChange={() => onToggleBought(item)} checked={item.bought} />}
     >
+      {mode === "edit" && (
+        <IconButton sx={{ paddingY: 0, paddingLeft: 0 }} onClick={() => onEdit(item)}>
+          <EditOutlined />
+        </IconButton>
+      )}
       <Box
         sx={{
           display: "flex",
