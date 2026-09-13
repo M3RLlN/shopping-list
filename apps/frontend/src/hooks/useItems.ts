@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { Item } from "@shopping/domain";
+import type { Item, CreateItemInput } from "@shopping/domain";
 import { httpItemRepository } from "../repositories/HttpItemRepository";
 import { toUserMessage } from "../utils/toUserMessage";
 
@@ -33,8 +33,20 @@ export const useItems = () => {
     }
   };
 
+  const addItem = async (item: CreateItemInput) => {
+    try {
+      await httpItemRepository.create(item);
+      const updatedItems = await httpItemRepository.findAll();
+      setItems(updatedItems);
+    } catch (err) {
+      const message = toUserMessage(err);
+      console.error(err);
+      setNotice(message);
+    }
+  };
+
   const clearNotice = () => {
     setNotice(null);
   };
-  return { items, isLoading, error, toggleBought, notice, clearNotice };
+  return { items, isLoading, error, toggleBought, notice, clearNotice, addItem };
 };
