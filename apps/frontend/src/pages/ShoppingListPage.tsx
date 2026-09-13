@@ -1,15 +1,17 @@
 import { Box, Snackbar, Alert } from "@mui/material";
 import AppHeader from "../components/AppHeader";
-import AppFooter from "../components/AppFooter";
 import PaperSheet from "../components/PaperSheet";
 import { useItems } from "../hooks/useItems";
 import AddFab from "../components/AddFab";
 import { useState } from "react";
 import ItemFormDialog from "../components/ItemFormDialog";
+import ListActionBar from "../components/ListActionBar";
+import EditActionBar from "../components/EditActionBar";
 
 function ShoppingListPage() {
   const { items, isLoading, error, toggleBought, notice, clearNotice, addItem } = useItems();
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [mode, setMode] = useState<"normal" | "edit">("normal");
 
   const openAddDialog = () => {
     setIsDialogOpen(true);
@@ -17,6 +19,14 @@ function ShoppingListPage() {
 
   const closeAddDialog = () => {
     setIsDialogOpen(false);
+  };
+
+  const enterEditMode = () => {
+    setMode("edit");
+  };
+
+  const exitEditMode = () => {
+    setMode("normal");
   };
 
   return (
@@ -31,7 +41,15 @@ function ShoppingListPage() {
         />
         <AddFab onClick={openAddDialog} />
       </Box>
-      <AppFooter />
+      {mode === "normal" ? (
+        <ListActionBar onEnterEditMode={enterEditMode} />
+      ) : (
+        <EditActionBar
+          onExitEditMode={exitEditMode}
+          onDeleteSelected={() => {}}
+          selectedCount={0}
+        />
+      )}
       <Snackbar open={notice != null} autoHideDuration={6000} onClose={clearNotice}>
         <Alert severity="error" onClose={clearNotice}>
           {notice}
