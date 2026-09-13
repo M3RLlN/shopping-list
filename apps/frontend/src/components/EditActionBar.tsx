@@ -13,6 +13,7 @@ function EditActionBar({ onExitEditMode, onDeleteSelected, selectedCount }: Prop
       <Button
         sx={{ borderRadius: 0, flexDirection: "column", "& .MuiButton-startIcon": { margin: 0 } }}
         variant="contained"
+        disableElevation
         color="secondary"
         fullWidth
         startIcon={<ArrowBackOutlined />}
@@ -23,6 +24,7 @@ function EditActionBar({ onExitEditMode, onDeleteSelected, selectedCount }: Prop
       <Button
         sx={{ borderRadius: 0, flexDirection: "column", "& .MuiButton-startIcon": { margin: 0 } }}
         variant="contained"
+        disableElevation
         color="error"
         fullWidth
         startIcon={<DeleteOutlined />}

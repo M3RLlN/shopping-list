@@ -10,6 +10,7 @@ function ListActionBar({ onEnterEditMode }: Props) {
     <Button
       sx={{ borderRadius: 0, flexDirection: "column", "& .MuiButton-startIcon": { margin: 0 } }}
       variant="contained"
+      disableElevation
       color="secondary"
       fullWidth
       startIcon={<EditOutlined />}
