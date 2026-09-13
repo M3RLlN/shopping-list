@@ -21,7 +21,7 @@ function ItemRow({ item, onToggleBought }: Props) {
             left: 0,
             right: 0,
             top: "50%",
-            borderTop: "1px solid currentColor",
+            borderTop: "2px solid currentColor",
             display: item.bought ? "block" : "none",
           },
         }}
