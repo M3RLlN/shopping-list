@@ -57,8 +57,31 @@ export const useItems = () => {
     }
   };
 
+  const deleteMany = async (ids: string[]) => {
+    try {
+      const deletePromises = ids.map((id) => httpItemRepository.delete(id));
+      await Promise.all(deletePromises);
+      const updatedItems = await httpItemRepository.findAll();
+      setItems(updatedItems);
+    } catch (err) {
+      const message = toUserMessage(err);
+      console.error(err);
+      setNotice(message);
+    }
+  };
+
   const clearNotice = () => {
     setNotice(null);
   };
-  return { items, isLoading, error, toggleBought, notice, clearNotice, addItem, updateItem };
+  return {
+    items,
+    isLoading,
+    error,
+    toggleBought,
+    notice,
+    clearNotice,
+    addItem,
+    updateItem,
+    deleteMany,
+  };
 };

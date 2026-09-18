@@ -10,11 +10,21 @@ import EditActionBar from "../components/EditActionBar";
 import type { Item } from "@shopping/domain";
 
 function ShoppingListPage() {
-  const { items, isLoading, error, toggleBought, notice, clearNotice, addItem, updateItem } =
-    useItems();
+  const {
+    items,
+    isLoading,
+    error,
+    toggleBought,
+    notice,
+    clearNotice,
+    addItem,
+    updateItem,
+    deleteMany,
+  } = useItems();
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [mode, setMode] = useState<"normal" | "edit">("normal");
   const [editingItem, setEditingItem] = useState<Item | null>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
   const openAddDialog = () => {
     setIsDialogOpen(true);
@@ -31,11 +41,27 @@ function ShoppingListPage() {
 
   const exitEditMode = () => {
     setMode("normal");
+    setSelectedIds(new Set());
   };
 
   const openEditDialog = (item: Item) => {
     setEditingItem(item);
     setIsDialogOpen(true);
+  };
+
+  const deleteSelected = async () => {
+    await deleteMany(Array.from(selectedIds));
+    setSelectedIds(new Set());
+  };
+
+  const toggleSelected = (id: string) => {
+    const updatedIds = new Set(selectedIds);
+    if (updatedIds.has(id)) {
+      updatedIds.delete(id);
+    } else {
+      updatedIds.add(id);
+    }
+    setSelectedIds(updatedIds);
   };
 
   return (
@@ -49,6 +75,8 @@ function ShoppingListPage() {
           onToggleBought={toggleBought}
           mode={mode}
           onEdit={openEditDialog}
+          selectedIds={selectedIds}
+          onToggleSelect={toggleSelected}
         />
         <AddFab onClick={openAddDialog} />
       </Box>
@@ -57,8 +85,8 @@ function ShoppingListPage() {
       ) : (
         <EditActionBar
           onExitEditMode={exitEditMode}
-          onDeleteSelected={() => {}}
-          selectedCount={0}
+          onDeleteSelected={deleteSelected}
+          selectedCount={selectedIds.size}
         />
       )}
       <Snackbar open={notice != null} autoHideDuration={6000} onClose={clearNotice}>

@@ -7,12 +7,19 @@ type Props = {
   onToggleBought: (item: Item) => void;
   mode: "normal" | "edit";
   onEdit: (item: Item) => void;
+  isSelected: boolean;
+  onToggleSelect: (id: string) => void;
 };
 
-function ItemRow({ item, onToggleBought, mode, onEdit }: Props) {
+function ItemRow({ item, onToggleBought, mode, onEdit, isSelected, onToggleSelect }: Props) {
   return (
     <ListItem
-      secondaryAction={<Checkbox onChange={() => onToggleBought(item)} checked={item.bought} />}
+      secondaryAction={
+        <Checkbox
+          onChange={mode === "normal" ? () => onToggleBought(item) : () => onToggleSelect(item.id)}
+          checked={mode === "normal" ? item.bought : isSelected}
+        />
+      }
     >
       {mode === "edit" && (
         <IconButton sx={{ paddingY: 0, paddingLeft: 0 }} onClick={() => onEdit(item)}>

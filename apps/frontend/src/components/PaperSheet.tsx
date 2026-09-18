@@ -9,9 +9,20 @@ type Props = {
   onToggleBought: (item: Item) => void;
   mode: "normal" | "edit";
   onEdit: (item: Item) => void;
+  selectedIds: Set<string>;
+  onToggleSelect: (id: string) => void;
 };
 
-function PaperSheet({ items, isLoading, error, onToggleBought, mode, onEdit }: Props) {
+function PaperSheet({
+  items,
+  isLoading,
+  error,
+  onToggleBought,
+  mode,
+  onEdit,
+  selectedIds,
+  onToggleSelect,
+}: Props) {
   return (
     <Box
       sx={{
@@ -33,6 +44,8 @@ function PaperSheet({ items, isLoading, error, onToggleBought, mode, onEdit }: P
               onToggleBought={onToggleBought}
               mode={mode}
               onEdit={onEdit}
+              isSelected={selectedIds.has(item.id)}
+              onToggleSelect={onToggleSelect}
             />
           ))}
         </List>
