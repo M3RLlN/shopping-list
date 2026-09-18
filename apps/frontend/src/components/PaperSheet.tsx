@@ -1,6 +1,7 @@
 import { Box, List, Alert, CircularProgress } from "@mui/material";
 import ItemRow from "./ItemRow";
 import type { Item } from "@shopping/domain";
+import { sortItems } from "../utils/sortItems";
 
 type Props = {
   items: Item[];
@@ -37,7 +38,7 @@ function PaperSheet({
       {isLoading && <CircularProgress />}
       {!isLoading && !error && (
         <List>
-          {items.map((item) => (
+          {sortItems(items, mode).map((item) => (
             <ItemRow
               key={item.id}
               item={item}
