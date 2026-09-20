@@ -28,6 +28,7 @@ function PaperSheet({
     <Box
       sx={{
         padding: 2,
+        paddingBottom: 8,
         flex: 1,
         backgroundColor: "background.paper",
         boxShadow: 10,
@@ -37,7 +38,7 @@ function PaperSheet({
       {error && <Alert severity="error">{error}</Alert>}
       {isLoading && <CircularProgress />}
       {!isLoading && !error && (
-        <List>
+        <List sx={{ padding: 0 }}>
           {sortItems(items, mode).map((item) => (
             <ItemRow
               key={item.id}

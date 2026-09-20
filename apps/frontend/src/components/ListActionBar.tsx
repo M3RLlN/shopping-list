@@ -1,5 +1,5 @@
-import { Button } from "@mui/material";
-import { EditOutlined } from "@mui/icons-material";
+import { Button, Box } from "@mui/material";
+import { EditOutlined, DeleteOutlined } from "@mui/icons-material";
 
 type Props = {
   onEnterEditMode: () => void;
@@ -13,7 +13,12 @@ function ListActionBar({ onEnterEditMode }: Props) {
       disableElevation
       color="secondary"
       fullWidth
-      startIcon={<EditOutlined />}
+      startIcon={
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, lineHeight: 1 }}>
+          <EditOutlined fontSize="small" /> /
+          <DeleteOutlined fontSize="small" />
+        </Box>
+      }
       onClick={onEnterEditMode}
     >
       Bearbeiten und Löschen
