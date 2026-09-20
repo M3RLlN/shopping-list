@@ -1,18 +1,13 @@
 import { z } from "zod";
+import { itemSchema } from "@shopping/contracts";
 
 /**
  * Checks the body of `PUT /api/items/:id`.
  *
- * Everything is optional, because an update only carries what changes.
- * But whatever is there does get checked.
+ * Builds on `itemSchema` from `@shopping/contracts`.
+ * `bought` is added here with `.extend()`, because it only makes sense when changing an item, never when creating one.
+ * `.partial()` then makes everything, `bought` included, optional, an update only carries what changes.
  *
- * `.strict()` rejects unknown fields — same as in `createItemSchema`.
+ * `.strict()` rejects unknown fields, same as in `createItemSchema`.
  */
-export const updateItemSchema = z
-  .object({
-    label: z.string().min(1).optional(),
-    amount: z.number().min(1).optional(),
-    unit: z.string().optional(),
-    bought: z.boolean().optional(),
-  })
-  .strict();
+export const updateItemSchema = itemSchema.extend({ bought: z.boolean() }).partial().strict();

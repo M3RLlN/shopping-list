@@ -1,25 +1,12 @@
 import type { Item, UpdateItemInput, CreateItemInput } from "@shopping/domain";
-import { AppException } from "@shopping/domain";
-import { z } from "zod";
+import { itemResponseSchema } from "../contracts/itemResponseSchema";
+import { throwIfNotOk } from "./httpClient";
 
-const itemResponseSchema = z.object({
-  id: z.string(),
-  label: z.string(),
-  amount: z.number().optional(),
-  unit: z.string().optional(),
-  bought: z.boolean(),
-  createdAt: z.coerce.date(),
-  updatedAt: z.coerce.date(),
-});
-
-const throwIfNotOk = async (res: Response): Promise<void> => {
-  if (!res.ok) {
-    const errorBody = await res.json().catch(() => null);
-    const message = errorBody?.error?.message ?? "Request Failed";
-    throw new AppException(message, res.status);
-  }
-};
-
+/**
+ * Talks to the API over HTTP, the browser-side counterpart to `MongoItemRepository`.
+ * Every method checks for a failed request with `throwIfNotOk` and the shape of the
+ * response with `itemResponseSchema` before handing the result back.
+ */
 export const httpItemRepository = {
   async findAll(): Promise<Item[]> {
     const res = await fetch("/api/items");
