@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "build": "npm run build -w @shopping/domain && npm run build -w @shopping/infrastructure && npm run build -w @shopping/api"
+    "build": "npm run build -w @shopping/domain && npm run build -w @shopping/contracts && npm run build -w @shopping/infrastructure && npm run build -w @shopping/api"
   },
   "author": "",
   "license": "ISC",

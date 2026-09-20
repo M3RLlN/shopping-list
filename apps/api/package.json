@@ -21,6 +21,7 @@
     "typescript": "^6.0.3"
   },
   "dependencies": {
+    "@shopping/contracts": "^1.0.0",
     "@shopping/domain": "^1.0.0",
     "@shopping/infrastructure": "^1.0.0",
     "cors": "^2.8.6",
