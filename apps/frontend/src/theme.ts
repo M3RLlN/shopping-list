@@ -12,6 +12,7 @@ const theme = createTheme({
         secondary: { main: "#BC6C25" },
         background: { default: "#fefae0" },
         error: { main: "#d32f2f" },
+        divider: "#7777771e",
       },
     },
     dark: {
@@ -20,6 +21,7 @@ const theme = createTheme({
         secondary: { main: "#DDA15E" },
         background: { default: "#283618" },
         error: { main: "#f44336", contrastText: "rgba(0,0,0,0.87)" },
+        divider: "#fefae017",
       },
     },
   },

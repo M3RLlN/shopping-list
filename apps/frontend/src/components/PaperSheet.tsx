@@ -33,6 +33,10 @@ function PaperSheet({
         backgroundColor: "background.paper",
         boxShadow: 10,
         overflow: "auto",
+        backgroundImage:
+          "linear-gradient(to right, var(--mui-palette-divider) 1px, transparent 1px), linear-gradient(to bottom, var(--mui-palette-divider) 1px, transparent 1px)",
+        backgroundSize: "24px 24px",
+        backgroundPosition: "center",
       }}
     >
       {error && <Alert severity="error">{error}</Alert>}
