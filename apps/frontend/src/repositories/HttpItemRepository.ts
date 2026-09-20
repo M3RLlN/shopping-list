@@ -25,7 +25,7 @@ export const httpItemRepository = {
     const res = await fetch("/api/items");
     await throwIfNotOk(res);
     const body = await res.json();
-    return itemResponseSchema.array().parse(body.data);
+    return itemResponseSchema.array().parse(body.data) as Item[];
   },
 
   async create(item: CreateItemInput): Promise<Item> {
@@ -36,7 +36,7 @@ export const httpItemRepository = {
     });
     await throwIfNotOk(res);
     const body = await res.json();
-    return itemResponseSchema.parse(body.data);
+    return itemResponseSchema.parse(body.data) as Item;
   },
 
   async update(id: string, item: UpdateItemInput): Promise<Item> {
@@ -47,7 +47,7 @@ export const httpItemRepository = {
     });
     await throwIfNotOk(res);
     const body = await res.json();
-    return itemResponseSchema.parse(body.data);
+    return itemResponseSchema.parse(body.data) as Item;
   },
 
   async delete(id: string): Promise<Item> {
@@ -56,6 +56,6 @@ export const httpItemRepository = {
     });
     await throwIfNotOk(res);
     const body = await res.json();
-    return itemResponseSchema.parse(body.data);
+    return itemResponseSchema.parse(body.data) as Item;
   },
 };

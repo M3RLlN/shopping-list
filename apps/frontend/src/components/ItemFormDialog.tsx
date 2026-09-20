@@ -36,9 +36,9 @@ function ItemFormDialog({ open, onClose, onCreate, onUpdate, itemToEdit }: Props
   const handleSave = () => {
     const item: CreateItemInput = {
       label: label,
-      amount: amount === "" ? undefined : Number(amount),
-      unit: unit === "" ? undefined : unit,
     };
+    if (amount != "") item.amount = Number(amount);
+    if (unit != "") item.unit = unit;
     if (itemToEdit == null) {
       onCreate(item);
     } else {
