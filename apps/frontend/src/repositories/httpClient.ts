@@ -23,12 +23,25 @@ const throwIfNotOk = async (res: Response): Promise<void> => {
  * `HttpItemRepository` builds the actual item requests on top of this.
  */
 export const httpClient = {
+  /**
+   * Sends a GET request.
+   *
+   * @param url - The address to request
+   * @returns The parsed JSON body
+   */
   async get(url: string) {
     const res = await fetch(url);
     await throwIfNotOk(res);
     return res.json();
   },
 
+  /**
+   * Sends a POST request with a JSON body.
+   *
+   * @param url - The address to request
+   * @param body - The value to send, turned into JSON
+   * @returns The parsed JSON body
+   */
   async post(url: string, body: unknown) {
     const res = await fetch(url, {
       method: "POST",
@@ -39,6 +52,13 @@ export const httpClient = {
     return res.json();
   },
 
+  /**
+   * Sends a PUT request with a JSON body.
+   *
+   * @param url - The address to request
+   * @param body - The value to send, turned into JSON
+   * @returns The parsed JSON body
+   */
   async put(url: string, body: unknown) {
     const res = await fetch(url, {
       method: "PUT",
@@ -49,6 +69,12 @@ export const httpClient = {
     return res.json();
   },
 
+  /**
+   * Sends a DELETE request.
+   *
+   * @param url - The address to request
+   * @returns The parsed JSON body
+   */
   async delete(url: string) {
     const res = await fetch(url, {
       method: "DELETE",
