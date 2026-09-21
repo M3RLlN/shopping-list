@@ -4,7 +4,7 @@ const HANDWRITING = '"Caveat Variable", cursive';
 const STANDARD = '"Arial", "sans-serif"';
 
 const theme = createTheme({
-  cssVariables: { colorSchemeSelector: "class" },
+  cssVariables: { colorSchemeSelector: "class" }, // A selector ("class" or "data") is required, without it MUI ignores setMode() and follows the OS setting.
   colorSchemes: {
     light: {
       palette: {
@@ -12,7 +12,7 @@ const theme = createTheme({
         secondary: { main: "#BC6C25" },
         background: { default: "#fefae0" },
         error: { main: "#d32f2f" },
-        divider: "#7777771e",
+        divider: "#7777771e", // Also used as the grid line color in PaperSheet.tsx.
       },
     },
     dark: {
@@ -20,7 +20,7 @@ const theme = createTheme({
         primary: { main: "#A3B26A" },
         secondary: { main: "#DDA15E" },
         background: { default: "#283618" },
-        error: { main: "#f44336", contrastText: "rgba(0,0,0,0.87)" },
+        error: { main: "#f44336", contrastText: "rgba(0,0,0,0.87)" }, // Set explicitly, MUI's own contrast pick was unreadable against this red.
         divider: "#fefae017",
       },
     },
