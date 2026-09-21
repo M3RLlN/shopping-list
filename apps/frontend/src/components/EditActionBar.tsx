@@ -7,10 +7,14 @@ type Props = {
   selectedCount: number;
 };
 
+/**
+ * Bottom bar in edit mode: back to normal, or delete the selected items.
+ */
 function EditActionBar({ onExitEditMode, onDeleteSelected, selectedCount }: Props) {
   return (
     <Box sx={{ display: "flex" }}>
       <Button
+        // No slotProps on this Button version, same reason as in ListActionBar.tsx.
         sx={{ borderRadius: 0, flexDirection: "column", "& .MuiButton-startIcon": { margin: 0 } }}
         variant="contained"
         disableElevation
