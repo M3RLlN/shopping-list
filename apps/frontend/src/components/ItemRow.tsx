@@ -11,10 +11,14 @@ type Props = {
   onToggleSelect: (id: string) => void;
 };
 
+/**
+ * One row: an edit button in edit mode, label, amount, unit, and a checkbox whose meaning depends on mode.
+ */
 function ItemRow({ item, onToggleBought, mode, onEdit, isSelected, onToggleSelect }: Props) {
   return (
     <ListItem
       secondaryAction={
+        // Same checkbox, "bought" in normal mode, "selected for deletion" in edit mode.
         <Checkbox
           onChange={mode === "normal" ? () => onToggleBought(item) : () => onToggleSelect(item.id)}
           checked={mode === "normal" ? item.bought : isSelected}
@@ -27,6 +31,8 @@ function ItemRow({ item, onToggleBought, mode, onEdit, isSelected, onToggleSelec
         </IconButton>
       )}
       <Box
+        // The strikethrough is one line drawn over this box, not textDecoration,
+        // which would break across the gaps between the three text elements below.
         sx={{
           display: "flex",
           position: "relative",

@@ -14,6 +14,9 @@ type Props = {
   onToggleSelect: (id: string) => void;
 };
 
+/**
+ * The paper sheet: item list, loading spinner, and error message.
+ */
 function PaperSheet({
   items,
   isLoading,
@@ -28,11 +31,13 @@ function PaperSheet({
     <Box
       sx={{
         padding: 2,
+        // Extra room so the last row does not hide behind AddFab.
         paddingBottom: 8,
         flex: 1,
         backgroundColor: "background.paper",
         boxShadow: 10,
         overflow: "auto",
+        // Two gradients draw the grid lines, using the theme's divider color.
         backgroundImage:
           "linear-gradient(to right, var(--mui-palette-divider) 1px, transparent 1px), linear-gradient(to bottom, var(--mui-palette-divider) 1px, transparent 1px)",
         backgroundSize: "24px 24px",
