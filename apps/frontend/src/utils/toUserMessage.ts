@@ -1,5 +1,11 @@
 import { AppException } from "@shopping/domain";
 
+/**
+ * Turns an error into German text a user can read.
+ *
+ * @param err - The error caught from a repository call
+ * @returns A short German message for the UI
+ */
 export const toUserMessage = (err: unknown): string => {
   if (err instanceof AppException) {
     switch (err.status) {
