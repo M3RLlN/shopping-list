@@ -68,7 +68,7 @@ function ItemFormDialog({ open, onClose, onCreate, onUpdate, itemToEdit }: Props
             slotProps={{
               input: { sx: { backgroundColor: "background.paper" } },
             }}
-            placeholder="Name"
+            placeholder="Artikel"
             value={label}
             onChange={(e) => {
               setLabel(e.target.value);

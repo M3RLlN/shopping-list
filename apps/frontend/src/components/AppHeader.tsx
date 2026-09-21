@@ -13,7 +13,7 @@ function AppHeader() {
       }}
     >
       <Box sx={{ flex: 1 }} />
-      <Typography variant="h1">Shopping List</Typography>
+      <Typography variant="h1">Einkaufsliste</Typography>
       <Box sx={{ flex: 1, textAlign: "right" }}>
         <ThemeToggleButton />
       </Box>
