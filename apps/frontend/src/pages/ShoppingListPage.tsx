@@ -9,6 +9,10 @@ import ListActionBar from "../components/ListActionBar";
 import EditActionBar from "../components/EditActionBar";
 import type { Item } from "@shopping/domain";
 
+/**
+ * The only place that calls useItems. Everything else only receives data and calls a function it was given,
+ * e.g. onToggleBought, when the user does something.
+ */
 function ShoppingListPage() {
   const {
     items,
@@ -30,6 +34,9 @@ function ShoppingListPage() {
     setIsDialogOpen(true);
   };
 
+  /**
+   * Also clears editingItem, otherwise the next "add" reopens the last edited item.
+   */
   const closeDialog = () => {
     setIsDialogOpen(false);
     setEditingItem(null);
@@ -49,6 +56,9 @@ function ShoppingListPage() {
     setIsDialogOpen(true);
   };
 
+  /**
+   * Clears the selection but stays in edit mode, so the user can keep deleting.
+   */
   const deleteSelected = async () => {
     await deleteMany(Array.from(selectedIds));
     setSelectedIds(new Set());
@@ -95,6 +105,7 @@ function ShoppingListPage() {
         </Alert>
       </Snackbar>
       <ItemFormDialog
+        // A new key creates a fresh ItemFormDialog, so its lazy initializers run again with the new item's values.
         key={editingItem?.id ?? "new"}
         open={isDialogOpen}
         onClose={closeDialog}
