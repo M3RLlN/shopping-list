@@ -18,7 +18,12 @@ type Props = {
   itemToEdit: Item | null;
 };
 
+/**
+ * Dialog for creating or editing one item, `itemToEdit === null` means "creating".
+ */
 function ItemFormDialog({ open, onClose, onCreate, onUpdate, itemToEdit }: Props) {
+  // Lazy initializers, not useEffect, they only run once per instance.
+  // ShoppingListPage gives this a key tied to the item id, so switching items creates a fresh instance.
   const [label, setLabel] = useState<string>(() => itemToEdit?.label ?? "");
   const [amount, setAmount] = useState<string>(() =>
     itemToEdit?.amount != undefined ? String(itemToEdit.amount) : "",
@@ -34,11 +39,15 @@ function ItemFormDialog({ open, onClose, onCreate, onUpdate, itemToEdit }: Props
   };
 
   const handleSave = () => {
+    // Built step by step: amount must be missing entirely when empty,
+    // not present with the value undefined. TypeScript treats those two as different here.
     const item: CreateItemInput = {
       label: label,
     };
     if (amount != "") item.amount = Number(amount);
     if (unit != "") item.unit = unit;
+
+    // Same item works for both calls, CreateItemInput is structurally part of UpdateItemInput.
     if (itemToEdit == null) {
       onCreate(item);
     } else {
@@ -68,6 +77,7 @@ function ItemFormDialog({ open, onClose, onCreate, onUpdate, itemToEdit }: Props
             slotProps={{
               input: { sx: { backgroundColor: "background.paper" } },
             }}
+            // placeholder, not label, a floating label is unreadable against this dialog's background.
             placeholder="Artikel"
             value={label}
             onChange={(e) => {
