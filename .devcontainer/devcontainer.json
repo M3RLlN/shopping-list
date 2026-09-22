@@ -2,12 +2,12 @@
   "name": "ShoppingList Dev Environment",
   "dockerComposeFile": ["../_docker/docker-compose.yml", "docker-compose.yml"],
   "service": "devcontainer",
-  // Wichtig: Nur den DevContainer und die MongoDB aus Docker Hub starten
+  // Only start the devcontainer and MongoDB, not the app containers themselves.
   "runServices": ["devcontainer", "mongodb"],
   "workspaceFolder": "/workspace",
 
-  // Windows-Bind-Mount liefert keine inotify-Events in den Container.
-  // Datei-Watcher muessen daher pollen, sonst kein Hot Reload.
+  // Windows bind mounts don't deliver inotify events into the container,
+  // file watchers have to poll instead, or hot reload breaks.
   "containerEnv": {
     "CHOKIDAR_USEPOLLING": "1",
     "CHOKIDAR_INTERVAL": "300"
